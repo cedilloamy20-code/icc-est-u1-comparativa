@@ -4,6 +4,7 @@ public class App {
         Generador g = new Generador();
         Benchmark b = new Benchmark();
         Metodos m = new Metodos();
+        QuickSort qs = new QuickSort();
 
         //los 3 arreglos base
         //1000
@@ -17,9 +18,24 @@ public class App {
 
         //1-> List<List<Integer>> listas = List.of(lista1, lista2, lista3);
         //2-> List<Integer>[] listas = new List<Integer>[] {lista1};
+        int[][] listas = {lista1, lista2, lista3};
         int[] list1c1 = lista1.clone();
         int[] list2c1 = lista2.clone();
         int[] list3c1 = lista3.clone();
+
+        int[] list1c2 = lista1.clone();
+        int[] list2c2 = lista2.clone();
+        int[] list3c2 = lista3.clone();
+
+        int[] list1c3 = lista1.clone();
+        int[] list2c3 = lista2.clone();
+        int[] list3c3 = lista3.clone();
+
+        int[] list1c4 = lista1.clone();
+        int[] list2c4 = lista2.clone();
+        int[] list3c4 = lista3.clone();
+
+        
         //List<Integer> list2c1 = Arrays.copy0f(lista2, lista2.size());
 
         Results benGenList = b.medir(() -> m.sortBubble(list1c1), "sortBubble", "10.000");
@@ -30,9 +46,9 @@ public class App {
         System.out.println(benGenList3);
         // Un runnable siempre va con el ejecutar q es () y el lambda
         // el generate es un metodo y mientras lo sea puede entrar en el runnable
-        System.out.println(benGenList);
-        System.out.println(benGenList2);
-        System.out.println(benGenList3);
+        Results benQs1 = b.medir(() -> qs.sort(list1c2), "QuickSort", "10.000");
+        Results benQs2 = b.medir(() -> qs.sort(list2c2), "QuickSort", "50.000");
+        Results benQs3 = b.medir(() -> qs.sort(list3c2), "QuickSort", "100.000");   
 
 
         /* 
