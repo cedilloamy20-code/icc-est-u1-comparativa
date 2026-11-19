@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Generador {
-    // Es el que da numeros aleatorios para la generacion de la lista
+    // Es el que da numeros aleatorios para la generacion de listas de enteros
     /*
     genera un lista de tamaño size con numeros aleatorios 
     entre 0 a size.
