@@ -1,21 +1,38 @@
-import java.util.List;
 
 public class App {
     public static void main(String[] args) throws Exception {
         Generador g = new Generador();
         Benchmark b = new Benchmark();
+        Metodos m = new Metodos();
 
-        List<Integer> list = g.generate(100000);
-        System.out.println(list);
+        //los 3 arreglos base
+        //1000
+        int[] lista1 = g.generate(10000);
 
-        Results benGenList = b.medir(() -> g.generate(100000), "Generacion");
+        //50000
+        int[] lista2 = g.generate(50000);
+
+        //100000
+        int[] lista3 = g.generate(100000);
+
+        //1-> List<List<Integer>> listas = List.of(lista1, lista2, lista3);
+        //2-> List<Integer>[] listas = new List<Integer>[] {lista1};
+        int[] list1c1 = lista1.clone();
+        int[] list2c1 = lista2.clone();
+        int[] list3c1 = lista3.clone();
+        //List<Integer> list2c1 = Arrays.copy0f(lista2, lista2.size());
+
+        Results benGenList = b.medir(() -> m.sortBubble(list1c1), "sortBubble", "10.000");
+        System.out.println(benGenList);
+        Results benGenList2 = b.medir(() -> m.sortBubble(list2c1), "sortBubble", "50000");
+        System.out.println(benGenList2);
+        Results benGenList3 = b.medir(() -> m.sortBubble(list3c1), "sortBubble", "100000");
+        System.out.println(benGenList3);
         // Un runnable siempre va con el ejecutar q es () y el lambda
         // el generate es un metodo y mientras lo sea puede entrar en el runnable
         System.out.println(benGenList);
-
-
-
-
+        System.out.println(benGenList2);
+        System.out.println(benGenList3);
 
 
         /* 
