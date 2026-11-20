@@ -48,13 +48,10 @@ public class Results {
     
 
     @Override
-    public String toString() {
-
-        long segundos = duration / 1000000000;
-
-        return "Results [name=" + name + ", duration=" + duration + ", segundos=" + segundos + ", sample=" + sample + "]";
-    }
-
-    
+public String toString() {
+    double milisegundos = duration / 1_000_000.0;
+    double segundos = duration / 1_000_000_000.0;
+    return "Results [" + name + ", duration=" + duration + "ns, " + milisegundos + "ms, " + segundos + "s, sample=" + sample + "]";
+}
     
 }
