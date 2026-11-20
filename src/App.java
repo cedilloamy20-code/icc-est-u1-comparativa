@@ -47,8 +47,11 @@ public class App {
         // Un runnable siempre va con el ejecutar q es () y el lambda
         // el generate es un metodo y mientras lo sea puede entrar en el runnable
         Results benQs1 = b.medir(() -> qs.sort(list1c2), "QuickSort", "10.000");
+        System.out.println(benQs1);
         Results benQs2 = b.medir(() -> qs.sort(list2c2), "QuickSort", "50.000");
-        Results benQs3 = b.medir(() -> qs.sort(list3c2), "QuickSort", "100.000");   
+        System.out.println(benQs2);
+        Results benQs3 = b.medir(() -> qs.sort(list3c2), "QuickSort", "100.000");
+        System.out.println(benQs3);   
 
 
         /* 
