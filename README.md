@@ -24,7 +24,7 @@
 
 1. **¿Cómo cambia el tiempo de cada método al aumentar el tamaño de la muestra?**
 
-En sortBubble el aumento de tiempo es brusco: con 10 000 datos tardó 157.298 m`, al subir a 50 000 saltó a 4458.0224 ms (unas 28 veces más) y con 100 000 llegó a 14567.0493 ms (más de 92 veces el tiempo inicial). Eso refleja su crecimiento cuadrático O(n^2).
+En sortBubble el aumento de tiempo es brusco: con 10 000 datos tardó 157.298 ms, al subir a 50 000 saltó a 4458.0224 ms (unas 28 veces más) y con 100 000 llegó a 14567.0493 ms (más de 92 veces el tiempo inicial). Eso refleja su crecimiento cuadrático O(n^2).
 
 En los otros tres métodos el crecimiento fue mucho más controlado. QuickSort pasó de 1.7702 ms (10 000) a 7.7288 ms (50 000) y a 10.7739 ms (100 000). Arrays.sort sobre int[] subió de 1.5758 ms a 5.4279 ms y terminó en 14.3391 ms. Por su parte, Arrays.sort con Comparator sobre Integer[] creció de 7.5845 ms a 18.5658 ms y llegó a 46.2472 ms en 100 000 elementos.
 
@@ -48,10 +48,11 @@ Aunque la conversión de int[] a Integer[] se realiza fuera del cronómetro, sig
 
 Dentro del intervalo medido solo quedó la llamada al ordenamiento y el trabajo interno que cada algoritmo necesita para completarlo, como comparaciones, intercambios, llamadas recursivas o arreglos auxiliares internos en el caso de TimSort. Quedaron fuera la generación de las muestras, la clonación de los arreglos, la conversión a Integer[], la creación del comparador, la validación del resultado y la impresión final en consola. La principal limitación de hacer una sola ejecución por método y tamaño es que un tiempo puntual puede verse afectado por factores ajenos al algoritmo, como procesos en segundo plano del sistema operativo, pausas del recolector de basura o el calentamiento del compilador JIT de Java. En esta corrida, por ejemplo, Arrays.sort fue más rápido en 10 000 y 50 000 elementos, pero QuickSort obtuvo un tiempo menor en 100 000; con una sola medición se pueden ver tendencias claras, pero no afirmar que un método será siempre más rápido que otro.
 
-## Conclusiones :D
+## Conclusiones
 
-1. Al ver los tiempos con 100 000 elementos entre sortBubble (14567.0493 ms) y QuickSort (10.7739 ms), queda claro que un algoritmo cuadrático deja de ser práctico cuando los datos crecen. Aunque sortBubble incluye la bandera para cortar si no hubo intercambios, con entradas aleatorias esa condición casi nunca se cumple temprano y termina tardando más de 14 segundos frente a los 10 ms de dividir el arreglo con pivotes.
+1. Con 100 000 elementos, sortBubble se demoró 14567.0493 ms (más de 14 segundos), mientras que QuickSort solo tardó 10.7739 ms. Aunque le puse una bandera a burbuja para que pare si ya no hay cambios, con números aleatorios casi nunca se activa a tiempo y el método igual se vuelve muy lento cuando la lista crece.
 
-2. En la muestra de 100 000 elementos, Arrays.sort sobre int[] tardó 14.3391 ms mientras que Arrays.sort con Comparator sobre Integer[] tardó 46.2472 ms (más del triple), incluso dejando la conversión a Integer[] fuera del cronómetro. Esto muestra que elegir tipos objeto en lugar de primitivos y usar una sobrecarga basada en TimSort con comparador tiene un costo real durante el ordenamiento.
+2. En la prueba de 100 000 datos, Arrays.sort con int[] tardó 14.3391 ms, pero con Integer[] y Comparator subió a 46.2472 ms. Aunque hice la conversión a Integer[] antes de prender el cronómetro, trabajar con objetos en lugar de datos primitivos y usar TimSort con comparador hace que ordenar tome más del triple de tiempo.
 
-3. El cambio en el primer lugar según el tamaño Arrays.sort fue el menor en 10 000 (1.5758 ms) y 50 000 (5.4279 ms), mientras que QuickSort registró el menor en 100 000 (10.7739 ms) deja en evidencia que hacer una sola ejecución por prueba sin calentamiento previo de la JVM introduce variaciones pequeñas. Por lo tanto, estos resultados muestran la ventaja clara de los algoritmos O(n log n) frente a O(n^2), pero no permiten asegurar que QuickSort vaya a ganar siempre a Arrays.sort, menos aún si llegara una entrada ya ordenada donde la partición de Lomuto se degradaría.
+3. En 10 000 y 50 000 elementos el más rápido fue Arrays.sort (1.5758 ms y 5.4279 ms), pero en 100 000 ganó QuickSort con 10.7739 ms. Como solo corrí una prueba por tamaño sin calentar la JVM, esos milisegundos de diferencia pueden variar en otra ejecución; por eso no se puede afirmar que QuickSort sea siempre el más rápido, menos todavía porque mi versión con el último elemento como pivote se pondría muy lenta si el arreglo ya viniera ordenado.
+
