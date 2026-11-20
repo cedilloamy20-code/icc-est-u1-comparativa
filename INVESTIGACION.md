@@ -48,7 +48,7 @@ Aunque la conversión de int[] a Integer[] se realiza fuera del cronómetro, sig
 
 Dentro del intervalo medido solo quedó la llamada al ordenamiento y el trabajo interno que cada algoritmo necesita para completarlo, como comparaciones, intercambios, llamadas recursivas o arreglos auxiliares internos en el caso de TimSort. Quedaron fuera la generación de las muestras, la clonación de los arreglos, la conversión a Integer[], la creación del comparador, la validación del resultado y la impresión final en consola. La principal limitación de hacer una sola ejecución por método y tamaño es que un tiempo puntual puede verse afectado por factores ajenos al algoritmo, como procesos en segundo plano del sistema operativo, pausas del recolector de basura o el calentamiento del compilador JIT de Java. En esta corrida, por ejemplo, Arrays.sort fue más rápido en 10 000 y 50 000 elementos, pero QuickSort obtuvo un tiempo menor en 100 000; con una sola medición se pueden ver tendencias claras, pero no afirmar que un método será siempre más rápido que otro.
 
-## Conclusiones
+## Conclusiones :D
 
 1. Con 100 000 elementos, sortBubble se demoró 14567.0493 ms (más de 14 segundos), mientras que QuickSort solo tardó 10.7739 ms. Aunque le puse una bandera a burbuja para que pare si ya no hay cambios, con números aleatorios casi nunca se activa a tiempo y el método igual se vuelve muy lento cuando la lista crece.
 
