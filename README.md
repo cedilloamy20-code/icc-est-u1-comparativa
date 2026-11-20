@@ -1,24 +1,26 @@
-# Capturas #
+# PRÁCTICA DE COMPARATIVA DE MÉTODOS DE ORDENAMIENTO Y BENCHMARKING
+
+## Capturas
 
 ![alt text](src/assets/image.png)
 
-# Tabla de Datos Obtenidos #
+## Tabla de Datos Obtenidos
 | Método | Sample | Tiempo en milisegundos |
 | :--- | :---: | :---: |
-| Bubble Sort (`sortBubble`) | 10 000 | 157.298 ms |
-| Quick Sort (`QuickSort`) | 10 000 | 1.7702 ms |
-| `Arrays.sort` · `int[]` | 10 000 | 1.5758 ms |
-| `Arrays.sort` + `Comparator` · `Integer[]` | 10 000 | 7.5845 ms |
-| Bubble Sort (`sortBubble`) | 50 000 | 4458.0224 ms |
-| Quick Sort (`QuickSort`) | 50 000 | 7.7288 ms |
-| `Arrays.sort` · `int[]` | 50 000 | 5.4279 ms |
-| `Arrays.sort` + `Comparator` · `Integer[]` | 50 000 | 18.5658 ms |
-| Bubble Sort (`sortBubble`) | 100 000 | 14567.0493 ms |
-| Quick Sort (`QuickSort`) | 100 000 | 10.7739 ms |
-| `Arrays.sort` · `int[]` | 100 000 | 14.3391 ms |
-| `Arrays.sort` + `Comparator` · `Integer[]` | 100 000 | 46.2472 ms |
+| Bubble Sort (sortBubble) | 10 000 | 157.298 ms |
+| Quick Sort (QuickSort) | 10 000 | 1.7702 ms |
+| Arrays.sort · int[] | 10 000 | 1.5758 ms |
+| Arrays.sort + Comparator · Integer[] | 10 000 | 7.5845 ms |
+| Bubble Sort (sortBubble) | 50 000 | 4458.0224 ms |
+| Quick Sort (QuickSort) | 50 000 | 7.7288 ms |
+| Arrays.sort · int[] | 50 000 | 5.4279 ms |
+| Arrays.sort + Comparator · Integer[] | 50 000 | 18.5658 ms |
+| Bubble Sort (sortBubble) | 100 000 | 14567.0493 ms |
+| Quick Sort (QuickSort) | 100 000 | 10.7739 ms |
+| Arrays.sort · int[] | 100 000 | 14.3391 ms |
+| Arrays.sort + Comparator · Integer[] | 100 000 | 46.2472 ms |
 
-# Análisis Requerido #
+## Análisis Requerido
 
 1. **¿Cómo cambia el tiempo de cada método al aumentar el tamaño de la muestra?**
 
@@ -46,3 +48,10 @@ Aunque la conversión de int[] a Integer[] se realiza fuera del cronómetro, sig
 
 Dentro del intervalo medido solo quedó la llamada al ordenamiento y el trabajo interno que cada algoritmo necesita para completarlo, como comparaciones, intercambios, llamadas recursivas o arreglos auxiliares internos en el caso de TimSort. Quedaron fuera la generación de las muestras, la clonación de los arreglos, la conversión a Integer[], la creación del comparador, la validación del resultado y la impresión final en consola. La principal limitación de hacer una sola ejecución por método y tamaño es que un tiempo puntual puede verse afectado por factores ajenos al algoritmo, como procesos en segundo plano del sistema operativo, pausas del recolector de basura o el calentamiento del compilador JIT de Java. En esta corrida, por ejemplo, Arrays.sort fue más rápido en 10 000 y 50 000 elementos, pero QuickSort obtuvo un tiempo menor en 100 000; con una sola medición se pueden ver tendencias claras, pero no afirmar que un método será siempre más rápido que otro.
 
+## Conclusiones :D
+
+1. Al ver los tiempos con 100 000 elementos entre sortBubble (14567.0493 ms) y QuickSort (10.7739 ms), queda claro que un algoritmo cuadrático deja de ser práctico cuando los datos crecen. Aunque sortBubble incluye la bandera para cortar si no hubo intercambios, con entradas aleatorias esa condición casi nunca se cumple temprano y termina tardando más de 14 segundos frente a los 10 ms de dividir el arreglo con pivotes.
+
+2. En la muestra de 100 000 elementos, Arrays.sort sobre int[] tardó 14.3391 ms mientras que Arrays.sort con Comparator sobre Integer[] tardó 46.2472 ms (más del triple), incluso dejando la conversión a Integer[] fuera del cronómetro. Esto muestra que elegir tipos objeto en lugar de primitivos y usar una sobrecarga basada en TimSort con comparador tiene un costo real durante el ordenamiento.
+
+3. El cambio en el primer lugar según el tamaño Arrays.sort fue el menor en 10 000 (1.5758 ms) y 50 000 (5.4279 ms), mientras que QuickSort registró el menor en 100 000 (10.7739 ms) deja en evidencia que hacer una sola ejecución por prueba sin calentamiento previo de la JVM introduce variaciones pequeñas. Por lo tanto, estos resultados muestran la ventaja clara de los algoritmos O(n log n) frente a O(n^2), pero no permiten asegurar que QuickSort vaya a ganar siempre a Arrays.sort, menos aún si llegara una entrada ya ordenada donde la partición de Lomuto se degradaría.
